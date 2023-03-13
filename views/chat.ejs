@@ -1,12 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            position: absolute;
+            height: 300px;
+            top: 15px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            list-style: none;
+            padding-top: 2px;
+        }
+
+        ul#messages {
+            width: 400px;
+            right: 15px;
+            background-color: #ddd;
+        }
+
+        ul#userlist {
+            width: 200px;
+            right: 430px;
+            background-color: #888;
+        }
+
+        li {
+            padding-left: 5px;
+            padding-bottom: 2px;
+            width: 100%;
+        }
+
+        input#message {
+            position: absolute;
+            width: 520px;
+            top: 330px;
+            right: 104px;
+            line-height: 24px;
+            right: 15px;
+            width: 80px;
+        }
+    </style>
+    <script src='/socket.io/socket.io.js' defer></script>
+    <script type="module" defer>
+        const settings = { transports: ['websocket'], upgrade: false }
+        const socket = io(settings)
+        const form = document.getElementById('chat')
+        const userlist = document.getElementById('userlist')
+        const messages = document.getElementById('messages')
+        const message = document.getElementById('message')
+        const username = window.location.href.split('/').pop()
+
+        socket.emit('join', username)
+
+        socket.on('join', (data) => {
+            const { username, users } = data
+            let li = document.createElement('li')
+            li.textContent = `${username} joined the chat`
+            messages.appendChild(li)
+            console.log(messages)
+            messages.scrollTo(0, messages.scrollHeight)
+
+            userlist.innerHTML = ''
+            for (let i = 0; i < users.length; i++) {
+                let li = document.createElement('li')
+                li.textContent = users[i];
+                userlist.appendChild(li)
+            }
+        })
+        socket.on('leave', (data) => {
+            const { messages, users } = data
+            let li = document.createElement('li')
+            li.textContent = `${username} has left the chat`
+            messages.appendChild(li)
+            messages.scrollTo(0, messages.scrollHeight)
+
+            userlist.innerHTML = ''
+            for (let i = 0; i < users.length; i++) {
+                let li = document.createElement('li')
+                li.textContent = users[i];
+                userlist.appendChild(li)
+            }
+        })
+        socket.on('message', (data) => {
+            const { messages, users } = data
+            const li = document.createElement('li')
+            li.textContent = `${messenger} : ${message}`
+            messages.appendChild(li)
+            messages.scrollTo(0, messages.scrollHeight)
+        })
+        socket.on('submit', (event) => {
+            console.log('submit')
+        })
+    </script>
+</head>''
+
 <body>
-    
+    <h2>Hallo <% locals.username %></h2>
+    <form id="chat">
+        <ul id="userlist">
+        </ul>
+        <ul id="messages">
+        </ul>
+        <input id="message" autocomplete="off">
+        <button id="send">send</button>
+    </form>
 </body>
+
 </html>
