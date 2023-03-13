@@ -64,7 +64,6 @@
             let li = document.createElement('li')
             li.textContent = `${username} joined the chat`
             messages.appendChild(li)
-            console.log(messages)
             messages.scrollTo(0, messages.scrollHeight)
 
             userlist.innerHTML = ''
@@ -75,7 +74,7 @@
             }
         })
         socket.on('leave', (data) => {
-            const { messages, users } = data
+            const { username, users } = data
             let li = document.createElement('li')
             li.textContent = `${username} has left the chat`
             messages.appendChild(li)
@@ -89,7 +88,7 @@
             }
         })
         socket.on('message', (data) => {
-            const { messages, users } = data
+            const { messenger, message } = data
             const li = document.createElement('li')
             li.textContent = `${messenger} : ${message}`
             messages.appendChild(li)
@@ -99,10 +98,11 @@
             console.log('submit')
         })
     </script>
-</head>''
+</head>
 
 <body>
-    <h2>Hallo <% locals.username %></h2>
+    <h2>Hallo <% locals.username %>
+    </h2>
     <form id="chat">
         <ul id="userlist">
         </ul>

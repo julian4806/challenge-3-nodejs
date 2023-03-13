@@ -1,9 +1,6 @@
 import express from "express"
 import { Server } from "socket.io"
 
-const sockets = []
-const users = []
-const messages = []
 
 const app = express()
 const port = 3000
@@ -11,6 +8,11 @@ const server = app.listen(port, () => {
     console.log(`Server running on port: ${port}`)
 })
 const io = new Server(server)
+
+const sockets = []
+const users = []
+const messages = []
+
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -31,12 +33,12 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/chat/:username', (req, res) => {
-    res.render('chat', { username: req.params.username })
+    res.render('chat', { username:req.params.username })
 })
 
 // socket io
 io.on('connection', (socket) => {
-    users[socket.id] = socket
+    sockets[socket.id] = socket
 
     socket.on('join', (username) => {
         users[socket.id] = username
