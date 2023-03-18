@@ -2,7 +2,6 @@
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 // const roomName = document.getElementById('room-name');
-const userList = document.getElementById('users');
 const usernameDisplay = document.getElementById('display-username')
 
 const socket = io();
@@ -30,11 +29,10 @@ socket.on('message', message => {
 });
 
 socket.on('user-count', (obj) => {
-  console.log('')
-  for (const [key, value] of Object.entries(obj)) {
-    console.log(`${key}: ${value}`);
+  for (const [room, count] of Object.entries(obj)) {
+    console.log(`${room}: ${count}`);
+    document.querySelector(`[data-room-count='${room}']`).innerText = count
   }
-  console.log('')
 })
 
 let previousSelectedRoom = ''
@@ -139,8 +137,8 @@ socket.on('available-rooms', (rooms) => {
         <span class="text-lg text-white">${room}</span>
         <span class="text-xs text-rooms-button-dark">Hay! What you looking at?</span>
       </div>
-      <div class="w-1/4 flex">
-        <span>13</span>
+      <div class="w-1/4 flex text-background-light pointer-events-none">
+        <span data-room-count="${room}">0</span>
         <i>@</i>
       </div>
     </div>

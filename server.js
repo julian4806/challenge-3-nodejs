@@ -22,6 +22,7 @@ const botName = 'ChatBox Bot';
 
 // Run when client connects
 io.on('connection', socket => {
+  io.emit('user-list', users)
   socket.emit('available-rooms', availableRooms)
   socket.on('joinRoom', (username, room) => {
     if (!availableRooms.includes(room)) {
