@@ -1,21 +1,23 @@
 {
-  "name": "challenge-3-nodejs",
+  "name": "chatcord",
   "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "main": "server/server.js",
+  "description": "Realtime chat app with rooms",
+  "main": "server.js",
   "scripts": {
-    "start":"node server/server.js",
-    "dev":"nodemon server/server.js"
+    "start": "node server",
+    "dev": "nodemon server",
+    "tw": "tailwindcss -i ./input.css -o ./public/css/style.css --watch"
+
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Brad Traversy",
+  "license": "MIT",
   "dependencies": {
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "nodemon": "^2.0.21",
-    "socket.io": "^4.6.1",
-    "socket.io-client": "^4.6.1"
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "tailwindcss": "^3.2.7"
   }
 }
