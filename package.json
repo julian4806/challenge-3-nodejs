@@ -1,5 +1,5 @@
 {
-  "name": "chatcord",
+  "name": "chatbox",
   "version": "1.0.0",
   "description": "Realtime chat app with rooms",
   "main": "server.js",
@@ -9,7 +9,7 @@
     "tw": "tailwindcss -i ./input.css -o ./public/css/style.css --watch"
 
   },
-  "author": "Brad Traversy",
+  "author": "Julian van Husen",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
